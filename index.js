@@ -30,7 +30,11 @@ async function run () {
             const result = await taskCollection.find(query).toArray();
             res.send(result);
         })
- 
+        app.get('/star',  async(req, res) => {
+            const query = {star: 'yes'};
+            const result = await taskCollection.find(query).toArray();
+            res.send(result);
+        })
     }
 
     finally{
