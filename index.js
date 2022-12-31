@@ -35,12 +35,28 @@ async function run () {
             const result = await taskCollection.find(query).toArray();
             res.send(result);
         })
-        app.delete('/task/:id', async(req, res) => {
+        app.get('/edit-task/:id',  async(req, res) => {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
+            const result = await taskCollection.findOne(query);
+            res.send(result);
+        })
+
+        app.post('/task', async(req,res) => {
+            const task = req.body;
+            const result = await taskCollection.insertOne(task);
+            res.send(result);
+        })
+
+        app.delete('/task/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id)};
             const result = await taskCollection.deleteOne(query);
             res.send(result);
         })
+
+        
+        
     }
 
     finally{
