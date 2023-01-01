@@ -65,6 +65,15 @@ async function run () {
             const result = await taskCollection.updateOne(query, {$set : updatedTask}, options);
             res.send(result);
         })
+
+        app.patch('/complete-task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+
+            console.log(id);
+            const result = await taskCollection.updateOne(query, {$set : {status: 'complete'} });
+            res.send(result);
+        })
         
     }
 
