@@ -42,20 +42,29 @@ async function run () {
             res.send(result);
         })
 
-        app.post('/task', async(req,res) => {
+        app.post('/add-task', async(req,res) => {
             const task = req.body;
             const result = await taskCollection.insertOne(task);
             res.send(result);
         })
 
-        app.delete('/task/:id', async(req, res) => {
+        app.delete('/delete-task/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id)};
             const result = await taskCollection.deleteOne(query);
             res.send(result);
         })
 
-        
+        // app.put() or app.patch()
+        app.put('/edit-task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const updatedTask = req.body;
+            const options = {upsert: true};  // if found then ( up -> update ) , if not found then (sert -> insert)
+            
+            const result = await taskCollection.updateOne(query, {$set : updatedTask}, options);
+            res.send(result);
+        })
         
     }
 
