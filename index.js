@@ -75,7 +75,6 @@ async function run () {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
 
-            console.log(id);
             const result = await taskCollection.updateOne(query, {$set : {status: 'complete'} });
             res.send(result);
         })
@@ -83,8 +82,16 @@ async function run () {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
 
-            console.log(id);
             const result = await taskCollection.updateOne(query, {$set : {status: 'incomplete'} });
+            res.send(result);
+        })
+
+        app.patch('/edit-star/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const star = req.body;
+            
+            const result = await taskCollection.updateOne(query, {$set: star});
             res.send(result);
         })
         
