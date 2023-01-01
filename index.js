@@ -74,6 +74,14 @@ async function run () {
             const result = await taskCollection.updateOne(query, {$set : {status: 'complete'} });
             res.send(result);
         })
+        app.patch('/mark-uncompleted-task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+
+            console.log(id);
+            const result = await taskCollection.updateOne(query, {$set : {status: 'incomplete'} });
+            res.send(result);
+        })
         
     }
 
