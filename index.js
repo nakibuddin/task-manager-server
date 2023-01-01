@@ -32,7 +32,12 @@ async function run () {
         })
         app.get('/star',  async(req, res) => {
             const query = {star: 'yes'};
-            const result = await taskCollection.find(query).toArray();
+            // const result = await taskCollection.updateOne(query, {$set : updatedTask}, options);
+            // const result = await taskCollection.updateOne(query, {$set : {status: 'complete'} });
+            const query2 = {$and : [ {star: 'yes'}, {status: 'incomplete'} ] };
+
+
+            const result = await taskCollection.find(query2).toArray();
             res.send(result);
         })
         app.get('/edit-task/:id',  async(req, res) => {
